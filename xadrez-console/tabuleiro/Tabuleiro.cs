@@ -14,5 +14,8 @@
             Colunas = colunas;
             Pecas = new Peca[linhas, colunas];
         }
+
+        public Peca Peca(int linha, int coluna)
+            => Pecas[linha, coluna];
     }
 }
