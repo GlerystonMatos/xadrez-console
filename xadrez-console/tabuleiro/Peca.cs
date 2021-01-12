@@ -17,5 +17,8 @@
             Cor = cor;
             QuantidadeMovimentos = 0;
         }
+
+        public void IncrementarQuantidadeMovimentos()
+            => QuantidadeMovimentos++;
     }
 }
