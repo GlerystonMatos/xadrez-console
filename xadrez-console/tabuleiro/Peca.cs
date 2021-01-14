@@ -1,6 +1,6 @@
 ﻿namespace xadrez_console.tabuleiro
 {
-    public class Peca
+    public abstract class Peca
     {
         public Posicao Posicao { get; set; }
 
@@ -20,5 +20,7 @@
 
         public void IncrementarQuantidadeMovimentos()
             => QuantidadeMovimentos++;
+
+        public abstract bool[,] MovimentosPossiveis();
     }
 }
