@@ -15,9 +15,7 @@ namespace xadrez_console.xadrez
         }
 
         public Posicao ToPosicao()
-        {
-            return new Posicao(8 - Linha, Coluna - 'A');
-        }
+            => new Posicao(8 - Linha, Coluna - 'A');
 
         public override string ToString()
             => "" + Coluna + Linha;
