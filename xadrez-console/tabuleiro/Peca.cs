@@ -21,6 +21,9 @@
         public void IncrementarQuantidadeMovimentos()
             => QuantidadeMovimentos++;
 
+        public void DecrementarQuantidadeMovimentos()
+            => QuantidadeMovimentos--;
+
         public bool ExisteMovimentosPossiveis()
         {
             bool[,] matriz = MovimentosPossiveis();
