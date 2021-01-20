@@ -72,8 +72,16 @@ namespace xadrez_console.xadrez
             }
 
             Xeque = EstaEmXeque(Adversaria(JogadorAtual));
-            Turno++;
-            MudaJogador();
+
+            if (TesteXequeMate(Adversaria(JogadorAtual)))
+            {
+                Terminada = true;
+            }
+            else
+            {
+                Turno++;
+                MudaJogador();
+            }
         }
 
         public void ValidarPosicaoOrigem(Posicao posicao)
@@ -188,6 +196,40 @@ namespace xadrez_console.xadrez
             return false;
         }
 
+        public bool TesteXequeMate(Cor cor)
+        {
+            if (!EstaEmXeque(cor))
+            {
+                return false;
+            }
+
+            foreach (Peca peca in PecasEmJogo(cor))
+            {
+                bool[,] matriz = peca.MovimentosPossiveis();
+                for (int i = 0; i < Tabuleiro.Linhas; i++)
+                {
+                    for (int j = 0; j < Tabuleiro.Colunas; j++)
+                    {
+                        if (matriz[i, j])
+                        {
+                            Posicao origem = peca.Posicao;
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = ExecutarMovimento(peca.Posicao, destino);
+                            bool testeXeque = EstaEmXeque(cor);
+                            DesfazMovimento(origem, destino, pecaCapturada);
+
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public void ColocarNovaPeca(char coluna, int linha, Peca peca)
         {
             Tabuleiro.ColocarPeca(peca, new PosicaoXadrez(coluna, linha).ToPosicao());
@@ -196,19 +238,26 @@ namespace xadrez_console.xadrez
 
         private void ColocarPecas()
         {
-            ColocarNovaPeca('C', 1, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('C', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('D', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('E', 2, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('E', 1, new Torre(Tabuleiro, Cor.Branca));
-            ColocarNovaPeca('D', 1, new Rei(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('C', 1, new Torre(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('C', 2, new Torre(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('D', 2, new Torre(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('E', 2, new Torre(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('E', 1, new Torre(Tabuleiro, Cor.Branca));
+            //ColocarNovaPeca('D', 1, new Rei(Tabuleiro, Cor.Branca));
 
-            ColocarNovaPeca('C', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('C', 8, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('D', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('E', 7, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('E', 8, new Torre(Tabuleiro, Cor.Preta));
-            ColocarNovaPeca('D', 8, new Rei(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('C', 7, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('C', 8, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('D', 7, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('E', 7, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('E', 8, new Torre(Tabuleiro, Cor.Preta));
+            //ColocarNovaPeca('D', 8, new Rei(Tabuleiro, Cor.Preta));
+
+            ColocarNovaPeca('C', 1, new Torre(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('D', 1, new Rei(Tabuleiro, Cor.Branca));
+            ColocarNovaPeca('H', 7, new Torre(Tabuleiro, Cor.Branca));
+
+            ColocarNovaPeca('A', 8, new Rei(Tabuleiro, Cor.Preta));
+            ColocarNovaPeca('B', 8, new Torre(Tabuleiro, Cor.Preta));
         }
     }
 }
