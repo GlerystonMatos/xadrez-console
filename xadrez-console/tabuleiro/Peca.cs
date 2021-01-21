@@ -45,5 +45,11 @@
             => MovimentosPossiveis()[posicao.Linha, posicao.Coluna];
 
         public abstract bool[,] MovimentosPossiveis();
+
+        protected bool PodeMover(Posicao posicao)
+        {
+            Peca peca = Tabuleiro.Peca(posicao);
+            return peca == null || peca.Cor != Cor;
+        }
     }
 }
